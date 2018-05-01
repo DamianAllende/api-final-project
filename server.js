@@ -1,6 +1,10 @@
 const express = require('express')
 const app = express()
 
+const apiRouter = require('./src/routers/apiRouter')
+
+app.use('/api', apiRouter)
+
 
 app.get('/', function(req, res){
     res.send('home page')
