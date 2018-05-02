@@ -5,7 +5,7 @@ const devConfig = {
 		port: '3306',
 		user: 'root',
 		password: 'root',
-		database: 'jobs_dev'
+		database: 'cristamarket'
 	},
 	migrations:{
 		directory: './src/database/migrations'
