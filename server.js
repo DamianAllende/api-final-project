@@ -18,6 +18,10 @@ app.get('/', function(req, res){
     res.send('home page')
 })
 
+app.use(function( req, res){
+	res.render('404.ejs')
+})
+
 
 
 const PORT = process.env.PORT || 3000;app.listen(PORT, function(){
