@@ -5,7 +5,6 @@ exports.up = function(knex, Promise) {
   	.createTable('puesto', function(t) {
   		t.increments(); // 
   		t.string('titulo');
-  		t.integer('id_puesto');
   		t.timestamp('fecha_registro')
   	     .notNullable()
   	     .defaultTo(knex.fn.now());

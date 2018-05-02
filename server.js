@@ -1,5 +1,8 @@
 const express = require('express')
-const app = express()
+
+
+const { Model } = require('objection')
+
 const ejs = require('ejs')
 
 const connectToDatabase = require ('./src/database/dbConnect')
@@ -8,7 +11,11 @@ const knexFile = require('./knexfile')
 const apiRouter = require('./src/routers/apiRouter')
 const pageRouter = require('./src/routers/pageRouter')
 
+const app = express()
+
 const appConnectionWithDatabase = connectToDatabase(knexFile.development)
+
+Model.knex(appConnectionWithDatabase)
 
 app.locals.db = appConnectionWithDatabase
 
