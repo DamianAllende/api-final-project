@@ -12,52 +12,6 @@ const Clientes = require('../models/Clientes')
 
 
 
-apiRouter.get('/productos', function(req, res) {
-  Productos
-    .query()
-    //.eager('username')
-    .then(function(data) {
-      res.json(data)
-    })
-})
-
-
-
-apiRouter.get('/clientes', function(req, res) {
-  Clientes
-    .query()
-    //.eager('username')
-    .then(function(data) {
-      res.json(data)
-    })
-})
-
-
-
-
-
-apiRouter.get('/puestos', function(req, res) {
-  Puestos
-    .query()
-    .eager('username')
-    .then(function(data) {
-      res.json(data)
-    })
-})
-
-
-
-
-
-apiRouter.get('/sucursal', function(req, res) {
-  Sucursal
-    .query()
-    .eager('username')
-    .then(function(data) {
-      res.json(data)
-    })
-})
-
 
 
 
@@ -100,9 +54,103 @@ function createNewVenta(req, res){
     })
 }
 
+
+function getSingleVenta (req, res){
+  const ventaId  = parseInt(req.params.ventaId)
+
+  Ventas
+    .query()
+    .findById(ventaId)
+    .then(function(venta){
+      res.json(venta).status(200)
+    })
+}
+
+
+function updateVenta(req, res){
+  const ventaId = parseInt(req.params.ventaId)
+  const newData = req.body
+
+  Ventas
+    .query()
+    .updateAndFetchById(ventaId, newData)
+    .then(function(ventaUpdated) {
+      res.json(ventaUpdated).status(200)
+    })
+}
+
+
+
+function allProductos (req, res){
+  Productos
+    .query()
+    .then(function(data) {
+      res.json(data)
+    })
+}
+
+function createNewProducto(req, res){
+  Productos
+    .query()
+    .insert(req.body) //INSERT INTO
+    .then(function(newProducto){
+      res.json(newProducto).status(200)
+      console.log('Producto save...')
+    })
+}
+
+function allClientes (req, res){
+  Clientes
+    .query()
+    .then(function(data) {
+      res.json(data)
+    })
+}
+
+function createNewCliente(req, res){
+  Clientes
+    .query()
+    .insert(req.body) //INSERT INTO
+    .then(function(newCliente){
+      res.json(newCliente).status(200)
+      console.log('Cliente save...')
+    })
+}
+
+
+function allPuestos (req, res){
+  Puestos
+    .query()
+    .eager('username')
+    .then(function(data) {
+      res.json(data)
+    })
+}
+
+function allSucursal (req, res){
+  Sucursal
+    .query()
+    .eager('username')
+    .then(function(data) {
+      res.json(data)
+    })
+}
+
+
+
+
 apiRouter
   .get('/ventas', allVentas)
   .post('/ventas', createNewVenta)
+  .get('/ventas/:ventaId', getSingleVenta)
+  .put('/ventas/:ventaId', updateVenta)
+  .get('/productos', allProductos)
+  .post('/productos', createNewProducto)
+  .get('/clientes', allClientes)
+  .post('/clientes', createNewCliente)
+  .get('/puestos', allPuestos)
+  .get('/sucursal', allSucursal)
+
 
 
 
