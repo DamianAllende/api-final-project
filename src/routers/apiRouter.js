@@ -32,26 +32,26 @@ apiRouter.get('/puestos', function(req, res) {
 // });
 
 
-// apiRouter.get('/sucursal', function(req, res) {
-//   Sucursal
-//     .query()
-//     .eager('username')
-//     .then(function(data) {
-//       res.json(data)
-//     })
-// })
+apiRouter.get('/sucursal', function(req, res) {
+  Sucursal
+    .query()
+    .eager('username')
+    .then(function(data) {
+      res.json(data)
+    })
+})
 
 
-apiRouter.get('/sucursal', function(req, res){
-	const db = req.app.locals.db
+// apiRouter.get('/sucursal', function(req, res){
+// 	const db = req.app.locals.db
 
-	db
-		.select()
-		.table('sucursal')
-		.then(function(data) {
-			res.json(data)
-		})
-});
+// 	db
+// 		.select()
+// 		.table('sucursal')
+// 		.then(function(data) {
+// 			res.json(data)
+// 		})
+// });
 
 apiRouter.get('/usuarios', function(req, res){
 	const db = req.app.locals.db
