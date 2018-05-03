@@ -2,11 +2,10 @@
 exports.up = function(knex, Promise) {
   return knex
   	.schema
-  	.createTable('username', function(t) {
+  	.createTable('productos', function(t) {
   		t.increments();// 
-  		t.string('email');
-  		t.string('pass');
   		t.string('nombre');
+  		t.string('precio');
   		t.timestamp('fecha_registro')
   	     .notNullable()
   	     .defaultTo(knex.fn.now());
@@ -15,6 +14,6 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
   return knex
-  	.schema
-  	.dropTableIfExists('username');
+    .schema
+    .dropTableIfExists('productos');
 };
