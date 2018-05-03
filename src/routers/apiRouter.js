@@ -90,9 +90,19 @@ function allVentas (req, res){
     })
 }
 
+function createNewVenta(req, res){
+  Ventas
+    .query()
+    .insert(req.body) //INSERT INTO
+    .then(function(newVenta){
+      res.json(newVenta).status(200)
+      console.log('Venta save...')
+    })
+}
+
 apiRouter
   .get('/ventas', allVentas)
-
+  .post('/ventas', createNewVenta)
 
 
 
