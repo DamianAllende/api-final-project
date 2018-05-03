@@ -9,14 +9,7 @@ const Productos = require('../models/Productos')
 const Clientes = require('../models/Clientes')
 
 
-apiRouter.get('/ventas', function(req, res) {
-  Ventas
-    .query()
-    //.eager('username')
-    .then(function(data) {
-      res.json(data)
-    })
-})
+
 
 
 apiRouter.get('/productos', function(req, res) {
@@ -78,6 +71,29 @@ apiRouter.get('/usuarios', function(req, res){
 			res.json(data)
 		})
 });
+
+
+
+
+
+
+
+
+
+
+function allVentas (req, res){
+  Ventas
+    .query()
+    //.eager('username')
+    .then(function(data) {
+      res.json(data)
+    })
+}
+
+apiRouter
+  .get('/ventas', allVentas)
+
+
 
 
 module.exports = apiRouter
