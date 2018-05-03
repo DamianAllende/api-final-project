@@ -15,16 +15,7 @@ const Clientes = require('../models/Clientes')
 
 
 
-apiRouter.get('/usuarios', function(req, res){
-	const db = req.app.locals.db
 
-	db
-		.select()
-		.table('username')
-		.then(function(data) {
-			res.json(data)
-		})
-});
 
 
 
@@ -136,7 +127,24 @@ function allSucursal (req, res){
     })
 }
 
+apiRouter.get('/usuarios', function(req, res){
+  const db = req.app.locals.db
 
+  db
+    .select()
+    .table('username')
+    .then(function(data) {
+      res.json(data)
+    })
+});
+
+function allUsuarios(req, res){
+  Usuarios
+    .query()
+    .then(function(data) {
+      res.json(data)
+    })
+}
 
 
 apiRouter
@@ -150,6 +158,7 @@ apiRouter
   .post('/clientes', createNewCliente)
   .get('/puestos', allPuestos)
   .get('/sucursal', allSucursal)
+  .get('/usuarios', allUsuarios)
 
 
 
