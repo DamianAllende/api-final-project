@@ -7,11 +7,24 @@ const ejs = require('ejs')
 
 const bodyParser = require('body-parser')
 
+const passport = require('passport')
+const cookieSession = require('cookie-session')
+const cookieParser = require('cookie-parser')
+
+const registerLocalStrategy = require ('./src/middleware/passport-local--registerLocalStrategy')
+const {
+	configDeserializeUser,
+	configSerializeUser
+} = require ('./src/helpers/passport-local--sessionActions')
+
+
+
 const connectToDatabase = require ('./src/database/dbConnect')
 const knexFile = require('./knexfile')
 
-const apiRouter = require('./src/routers/apiRouter')
-const pageRouter = require('./src/routers/pageRouter')
+const apiRouter = require('./src/routes/apiRouter')
+const pageRouter = require('./src/routes/pageRouter')
+const authRouter = require('./src/routes/authRouter')
 
 const app = express()
 
@@ -20,6 +33,24 @@ const appConnectionWithDatabase = connectToDatabase(knexFile.development)
 Model.knex(appConnectionWithDatabase)
 
 app.locals.db = appConnectionWithDatabase
+
+
+app.use(cookieParser())
+app.use(cookieSession({
+	name:'cookiemoster',
+	secret:'supersecrte',
+	httpOnly:true,
+	signd: false
+}))
+
+
+
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(registerLocalStrategy())
+passport.serializeUser(configSerializeUser())
+passport.deserializeUser(configDeserializeUser())
+
 
 
 app.engine('ejs', ejs.renderFile)
@@ -33,6 +64,8 @@ app.use(express.static(`${__dirname}/public`))
 app.use('/', pageRouter)
 
 app.use('/api', apiRouter)
+app.use('/auth', authRouter)
+
 app.get('/', function(req, res){
     res.send('home page')
 })
