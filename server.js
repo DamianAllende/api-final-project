@@ -7,6 +7,9 @@ const ejs = require('ejs')
 
 const bodyParser = require('body-parser')
 
+const logger = require('morgan')
+const cors = require('cors')
+
 const passport = require('passport')
 const cookieSession = require('cookie-session')
 const cookieParser = require('cookie-parser')
@@ -61,8 +64,10 @@ app.use(bodyParser.json())
 
 app.use(express.static(`${__dirname}/public`))
 
-app.use('/', pageRouter)
+app.use(logger('tiny'))
+app.use(cors())
 
+app.use('/', pageRouter)
 app.use('/api', apiRouter)
 app.use('/auth', authRouter)
 
