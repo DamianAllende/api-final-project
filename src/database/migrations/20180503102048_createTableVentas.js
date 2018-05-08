@@ -9,6 +9,7 @@ exports.up = function(knex, Promise) {
   		t.string('cliente');
       t.string('producto');
       t.float('precio');
+      t.integer('cantidad');
       t.boolean('tipo_pago');
       t.string('id_compra');
   		t.timestamp('fecha_registro')

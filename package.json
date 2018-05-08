@@ -4,6 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "dev": "npm-run-all --parallel dev:server dev:webpack",
+    "dev:server": "NODE_ENV=development nodemon server.js server.js --watch src --watch server.js",
+    "dev:webpack": "./node_modules/.bin/webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
   },
@@ -19,6 +22,8 @@
   },
   "homepage": "https://github.com/DamianAllende/api-final-project#readme",
   "dependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "body-parser": "^1.18.2",
     "cookie-parser": "1.4.3",
     "cookie-session": "2.0.0-beta.3",
     "cors": "^2.8.4",
@@ -35,7 +40,8 @@
     "passport-local": "1.0.0",
     "react": "16.1.0",
     "react-dom": "16.1.0",
-    "react-router-dom": "4.2.0"
+    "react-router-dom": "4.2.0",
+    "superagent": "^3.8.2"
   },
   "devDependencies": {
     "babel-core": "6.26.0",
@@ -44,6 +50,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "6.26.0",
     "babel-preset-env": "1.6.1",
     "babel-preset-react": "6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "webpack": "^3.8.1"
   }
 }

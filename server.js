@@ -71,9 +71,9 @@ app.use('/', pageRouter)
 app.use('/api', apiRouter)
 app.use('/auth', authRouter)
 
-app.get('/', function(req, res){
-    res.send('home page')
-})
+// app.get('/', function(req, res){
+//     res.send('home page')
+// })
 
 app.use(function( req, res){
 	res.render('404.ejs')
