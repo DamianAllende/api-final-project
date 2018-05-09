@@ -1,37 +1,23 @@
 import React, { Component } from 'react'
 import request from 'superagent'
-constructor(){
-      super()
-      this.state = {
-    
-        clientes: ''
-      }
-    }
+import { LineChart, Line, CartesianGrid, XAxis } from 'recharts';
+const API_URL = 'http://localhost:3000'
 
 
-
-componentDidMount() {
-      request
-          .get(`${API_URL}/api/clientes`)
-          .then((data) => {
-            this.setState({
-              clientes: data.body
-            })
-            
-          })
-          .catch(function(e) {
-            console.log(e)
-          })
-   }
-
+ let data = [{ name: 'a', value: 12 },
+ { name: 'b', value: 2 },
+ { name: 'c', value: 122 }];
 
 class Options extends Component {
   render() {
   	return (
         <div>
-          {this.state.clientes.map((item) => {
-            return <h1></h1>
-          })}
+         <LineChart width={400} height={400} data={data}>
+         <Line type="monotone" dataKey="value" stroke="#8884d8" />
+          <CartesianGrid stroke="#ccc" />
+         <XAxis dataKey="name" />
+  
+</LineChart>
         </div>
             
   	);

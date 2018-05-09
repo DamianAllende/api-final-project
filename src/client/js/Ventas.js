@@ -100,7 +100,7 @@ componentDidMount() {
   render() {
     let listClientes = this.state.clientes
     let nweLists = this.state.ventas.filter(word => word.cliente === formularioVenta.cliente.value );
-  	
+    
   
     return (
       <div>
@@ -185,11 +185,10 @@ componentDidMount() {
 
         </div>
     </div>    
-  	);
+    );
   }
 }
 
 
 
 export default Ventas;
-

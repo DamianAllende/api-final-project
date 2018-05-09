@@ -41,6 +41,7 @@
     "react": "16.1.0",
     "react-dom": "16.1.0",
     "react-router-dom": "4.2.0",
+    "recharts": "^1.0.0-beta.10",
     "superagent": "^3.8.2"
   },
   "devDependencies": {

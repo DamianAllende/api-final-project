@@ -13,7 +13,7 @@ import {
 
 
 import Ventas from './Ventas';
-import Inicio from './Inicio';
+import Options from './Options';
 
 
 
@@ -24,8 +24,8 @@ class App extends Component {
   render (){
     return <div>
       <Switch>
-        <Route path='/' component={Ventas}/>
-        <Route path='/ventas' component={Ventas}/>
+        <Route exact path='/' component={Options}/>
+        <Route exact path='/ventas' component={Ventas}/>
         
       </Switch>
     </div>
