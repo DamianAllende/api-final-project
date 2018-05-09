@@ -2453,7 +2453,8 @@ var App = function (_Component) {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Switch */],
         null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Route */], { path: '/', component: __WEBPACK_IMPORTED_MODULE_3__Ventas__["a" /* default */] })
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Route */], { path: '/', component: __WEBPACK_IMPORTED_MODULE_3__Ventas__["a" /* default */] }),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Route */], { path: '/ventas', component: __WEBPACK_IMPORTED_MODULE_3__Ventas__["a" /* default */] })
       )
     );
   };
@@ -13082,9 +13083,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ListaProductos__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_superagent__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_superagent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_superagent__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_superagent__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_superagent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_superagent__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ListaProductos__ = __webpack_require__(83);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -13095,12 +13096,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
 var listaProductos = [];
 
 var API_URL = 'http://localhost:3000';
 var usuario = 'damian';
-var fechas = new Date();
-var fecha = fechas.getYear();
+var fecha = new Date();
 
 var Ventas = function (_Component) {
   _inherits(Ventas, _Component);
@@ -13121,9 +13122,9 @@ var Ventas = function (_Component) {
         usuario: usuario
       };
 
-      __WEBPACK_IMPORTED_MODULE_2_superagent___default.a.post(API_URL + '/api/ventas').send(registroVenta).then(function () {
+      __WEBPACK_IMPORTED_MODULE_1_superagent___default.a.post(API_URL + '/api/ventas').send(registroVenta).then(function () {
 
-        __WEBPACK_IMPORTED_MODULE_2_superagent___default.a.get(API_URL + '/api/ventas').then(function (data) {
+        __WEBPACK_IMPORTED_MODULE_1_superagent___default.a.get(API_URL + '/api/ventas').then(function (data) {
           _this.setState({
             ventas: data.body
           });
@@ -13135,155 +13136,245 @@ var Ventas = function (_Component) {
       });
     };
 
-    _this.eliminarVenta = function () {
+    _this.eliminarVenta = function (elementId) {
 
       console.log('todos somos');
 
-      // request
-      //   .delete(`${API_URL}/api/talentos/${elementId}`)
-      //   .then(() => {
-      //     console.log('registro eliminado')
-      //   });
-
-      // request
-      //   .get(`${API_URL}/api/talentos`)
-      //   .then((data) => {
-      //       this.setState({
-      //         talentos: data.body 
-      //       })
-      //   })
-
-      //   .catch(function(e){
-      //     console.log(e)
-      //   })
+      __WEBPACK_IMPORTED_MODULE_1_superagent___default.a.delete(API_URL + '/api/ventas/' + elementId).then(function () {
+        console.log('registro eliminado');
+        __WEBPACK_IMPORTED_MODULE_1_superagent___default.a.get(API_URL + '/api/ventas').then(function (data) {
+          _this.setState({
+            ventas: data.body
+          });
+        });
+      }).catch(function (e) {
+        console.log(e);
+      });
     };
 
     _this.state = {
-      ventas: []
+      ventas: [],
+      clientes: ''
     };
     return _this;
   }
 
-  Ventas.prototype.render = function render() {
+  Ventas.prototype.componentDidMount = function componentDidMount() {
     var _this2 = this;
 
-    console.log(this.state.ventas);
-    console.log(fecha);
+    __WEBPACK_IMPORTED_MODULE_1_superagent___default.a.get(API_URL + '/api/clientes').then(function (data) {
+      _this2.setState({
+        clientes: data.body
+      });
+    }).catch(function (e) {
+      console.log(e);
+    });
+  };
+
+  Ventas.prototype.render = function render() {
+    var _this3 = this;
+
+    var listClientes = this.state.clientes;
     var nweLists = this.state.ventas.filter(function (word) {
       return word.cliente === formularioVenta.cliente.value;
     });
+
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'form',
-        { name: 'formularioVenta', onSubmit: function onSubmit(e) {
-            _this2.nuevaVenta(e);
-          } },
+        'div',
+        { className: 'head__container' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'p',
-            null,
-            'Cliente'
-          )
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'select',
-            { name: 'cliente' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'option',
-              { value: 'PABLO BARCENAS' },
-              'PABLO BARCENAS'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'option',
-              { value: 'MARCO ANTONIO BARCENAS' },
-              'MARCO ANTONIO BARCENAS'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'option',
-              { value: 'GENARO MALDONADO' },
-              'GENARO MALDONADO'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'option',
-              { value: 'MIGUEL CORTINA' },
-              'MIGUEL CORTINA'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'option',
-              { value: 'JOSEFINA ORTIZ' },
-              'JOSEFINA ORTIZ'
-            )
-          )
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'p',
-            null,
-            'Producto'
-          )
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'select',
-            { name: 'producto' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'option',
-              { value: '', disabled: true },
-              'Please select an item'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'option',
-              { value: 'SILLA APILABLE' },
-              'SILLA APILABLE'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'option',
-              { value: 'SILLA BASTON' },
-              'SILLA BASTON'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'option',
-              { value: 'SILLA CENTURY' },
-              'SILLA CENTURY'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'option',
-              { value: 'SILLA COLONIAL' },
-              'SILLA COLONIAL'
-            )
-          ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'number', name: 'cantidad' })
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'radio', value: '1', name: 'tipo_pago' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'radio', value: '0', name: 'tipo_pago' })
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'submit', value: 'Submit' })
+          'h1',
+          { className: 'titulo__componente' },
+          'Sistema de Gesti\xF3n - Ventas'
         )
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        null,
-        nweLists.map(function (items) {
-          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__ListaProductos__["a" /* default */], { producto: items.producto, cantidad: items.cantidad, fn: _this2.eliminarVenta });
-          // return <ListaProductos cliente={items} fn={this.borrarItem} posicion={idArray} />
-        })
+        { className: 'ventas' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'form',
+          { name: 'formularioVenta', onSubmit: function onSubmit(e) {
+              _this3.nuevaVenta(e);
+            } },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'ventas__separador' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'div',
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'h1',
+                { className: 'ventas__label' },
+                'Cliente'
+              )
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'div',
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'select',
+                { name: 'cliente', className: 'ventas__select ventas__clientes' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'option',
+                  { value: 'PABLO BARCENAS' },
+                  'PABLO BARCENAS'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'option',
+                  { value: 'MARCO ANTONIO BARCENAS' },
+                  'MARCO ANTONIO BARCENAS'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'option',
+                  { value: 'GENARO MALDONADO' },
+                  'GENARO MALDONADO'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'option',
+                  { value: 'MIGUEL CORTINA' },
+                  'MIGUEL CORTINA'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'option',
+                  { value: 'JOSEFINA ORTIZ' },
+                  'JOSEFINA ORTIZ'
+                )
+              )
+            )
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'ventas__separador' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'section',
+              { className: 'ventas__productos__cantidad' },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'ventas__flex__uno' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'h1',
+                  { className: 'ventas__label' },
+                  'Producto'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'select',
+                  { name: 'producto', className: ' ventas__productos' },
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'option',
+                    { value: '', disabled: true },
+                    'Please select an item'
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'option',
+                    { value: 'SILLA APILABLE' },
+                    'SILLA APILABLE'
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'option',
+                    { value: 'SILLA BASTON' },
+                    'SILLA BASTON'
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'option',
+                    { value: 'SILLA CENTURY' },
+                    'SILLA CENTURY'
+                  ),
+                  __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'option',
+                    { value: 'SILLA COLONIAL' },
+                    'SILLA COLONIAL'
+                  )
+                )
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'ventas__flex__dos' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'h1',
+                  { className: 'ventas__label ' },
+                  'Cantidad'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'ventas__cantidad', type: 'number', name: 'cantidad' })
+              )
+            )
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'ventas__separador' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'div',
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'h1',
+                { className: 'ventas__label ' },
+                'Tipo de Pago'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'label',
+                { className: 'titulo__radio' },
+                'Efectivo'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'ventas__radio', type: 'radio', value: '1', name: 'tipo_pago' }),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'label',
+                { className: 'titulo__radio' },
+                'Cr\xE9dito'
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'radio', value: '0', name: 'tipo_pago' })
+            )
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'ventas__separador' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'div',
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'venta__boton', type: 'submit', value: 'Submit' })
+            )
+          )
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'table',
+            { 'class': 'blueTable' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'thead',
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'tr',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'th',
+                  null,
+                  'Producto'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'th',
+                  null,
+                  'Cantidad'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                  'th',
+                  null,
+                  'Eliminar'
+                )
+              )
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'tbody',
+              null,
+              nweLists.map(function (items) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__ListaProductos__["a" /* default */], { key: items.id, id: items.id, producto: items.producto, cantidad: items.cantidad, fn: _this3.eliminarVenta });
+                // return <ListaProductos cliente={items} fn={this.borrarItem} posicion={idArray} />
+              })
+            )
+          )
+        )
       )
     );
   };
@@ -13295,63 +13386,6 @@ var Ventas = function (_Component) {
 
 /***/ }),
 /* 77 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var ListaProductos = function (_Component) {
-  _inherits(ListaProductos, _Component);
-
-  function ListaProductos() {
-    _classCallCheck(this, ListaProductos);
-
-    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
-  }
-
-  ListaProductos.prototype.render = function render() {
-    var _this2 = this;
-
-    console.log();
-
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      'div',
-      null,
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'h1',
-        null,
-        this.props.producto
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'h1',
-        null,
-        this.props.cantidad
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'button',
-        { onClick: function onClick() {
-            _this2.props.fn();
-          } },
-        'Borrar'
-      )
-    );
-  };
-
-  return ListaProductos;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (ListaProductos);
-
-/***/ }),
-/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -13373,11 +13407,11 @@ if (typeof window !== 'undefined') {
   root = this;
 }
 
-var Emitter = __webpack_require__(79);
-var RequestBase = __webpack_require__(80);
+var Emitter = __webpack_require__(78);
+var RequestBase = __webpack_require__(79);
 var isObject = __webpack_require__(34);
-var ResponseBase = __webpack_require__(81);
-var Agent = __webpack_require__(83);
+var ResponseBase = __webpack_require__(80);
+var Agent = __webpack_require__(82);
 
 /**
  * Noop.
@@ -14287,7 +14321,7 @@ request.put = function (url, data, fn) {
 };
 
 /***/ }),
-/* 79 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -14450,7 +14484,7 @@ Emitter.prototype.hasListeners = function (event) {
 };
 
 /***/ }),
-/* 80 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15148,7 +15182,7 @@ RequestBase.prototype._setTimeouts = function () {
 };
 
 /***/ }),
-/* 81 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15158,7 +15192,7 @@ RequestBase.prototype._setTimeouts = function () {
  * Module dependencies.
  */
 
-var utils = __webpack_require__(82);
+var utils = __webpack_require__(81);
 
 /**
  * Expose `ResponseBase`.
@@ -15288,7 +15322,7 @@ ResponseBase.prototype._setStatusProperties = function (status) {
 };
 
 /***/ }),
-/* 82 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15365,7 +15399,7 @@ exports.cleanHeader = function (header, changesOrigin) {
 };
 
 /***/ }),
-/* 83 */
+/* 82 */
 /***/ (function(module, exports) {
 
 function Agent() {
@@ -15387,6 +15421,68 @@ Agent.prototype._setDefaults = function (req) {
 };
 
 module.exports = Agent;
+
+/***/ }),
+/* 83 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var ListaProductos = function (_Component) {
+  _inherits(ListaProductos, _Component);
+
+  function ListaProductos() {
+    _classCallCheck(this, ListaProductos);
+
+    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
+  }
+
+  ListaProductos.prototype.render = function render() {
+    var _this2 = this;
+
+    console.log();
+
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      'tr',
+      null,
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'td',
+        null,
+        this.props.producto
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'td',
+        null,
+        this.props.cantidad
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'td',
+        null,
+        ' ',
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'button',
+          { onClick: function onClick() {
+              _this2.props.fn(_this2.props.id);
+            } },
+          'Borrar'
+        )
+      )
+    );
+  };
+
+  return ListaProductos;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (ListaProductos);
 
 /***/ }),
 /* 84 */

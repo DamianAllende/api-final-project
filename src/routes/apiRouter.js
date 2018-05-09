@@ -130,12 +130,32 @@ function allUsuarios(req, res){
     })
 }
 
+function deleteVentas(req, res){
+  const ventaId = parseInt(req.params.ventaId)
+  Ventas
+  .query()
+    .deleteById(ventaId)
+    .then(function(rowsDeleted) {
+      res.json({
+        deleteVentas: rowsDeleted
+      }).status(200)
+    })
+    .catch(function(e) {
+      res.json({
+        error: e
+      }).status(500)
+    })
+}
+
+
+
 
 apiRouter
   .get('/ventas', allVentas)
   .post('/ventas', createNewVenta)
   .get('/ventas/:ventaId', getSingleVenta)
   .put('/ventas/:ventaId', updateVenta)
+  .delete('/ventas/:ventaId', deleteVentas)
   .get('/productos', allProductos)
   .post('/productos', createNewProducto)
   .get('/clientes', allClientes)

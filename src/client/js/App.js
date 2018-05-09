@@ -17,11 +17,15 @@ import Inicio from './Inicio';
 
 
 
+
+
+
 class App extends Component {
   render (){
     return <div>
       <Switch>
         <Route path='/' component={Ventas}/>
+        <Route path='/ventas' component={Ventas}/>
         
       </Switch>
     </div>
